@@ -2,11 +2,11 @@
 
 ![Example](/assets/example.png)
 
-[![npm version](https://badge.fury.io/js/react-global-loading.svg)][npm_url]
-[![downloads](https://img.shields.io/npm/dt/react-global-loading.svg)][npm_url]
-[![license](https://img.shields.io/npm/l/react-global-loading.svg)][npm_url]
+[![npm version](https://badge.fury.io/js/react-global-alert.svg)][npm_url]
+[![downloads](https://img.shields.io/npm/dt/react-global-alert.svg)][npm_url]
+[![license](https://img.shields.io/npm/l/react-global-alert.svg)][npm_url]
 
-[npm_url]: https://www.npmjs.org/package/react-global-loading
+[npm_url]: https://www.npmjs.org/package/react-global-alert
 
 React simple global loading package
 
@@ -15,34 +15,41 @@ React simple global loading package
 With Yarn:
 
 ```bash
-yarn add react-global-loading
+yarn add react-global-alert
 ```
 
 With npm:
 
 ```bash
-npm install --save react-global-loading
+npm install --save react-global-alert
 ```
 
 ## Getting Started
 
-Add the GlobalLoading to your app first (should be at root component like index.js or app.js). It will take care of rendering global loading . Now you can trigger `globalLoading.show()` and `globalLoading.hide()` from anywhere!
+Add the globalAlert to your app first (should be at root component like index.js or app.js). It will take care of rendering global loading . Now you can trigger `globalAlert.show()` and `globalAlert.hide()` from anywhere!
 
 ```tsx
-import { GlobalLoading, showLoading } from 'react-hot-toast';
+import { GlobalAlert, globalAlert } from 'react-global-alert';
 
 const App = () => {
   const show = () => {
-    showLoading(true);
-    setTimeout(() => {
-      showLoading(false);
-    }, 1000);
+    globalAlert.show();
+  };
+
+  const showWithCustomInfo = () => {
+    globalAlert.show({
+      title: 'Alert title',
+      content: 'Some content',
+      onCancel: () => console.log('Alert cancel'),
+      onConfirm: () => console.log('Alert confirm')
+    });
   };
 
   return (
     <div>
-      <button onClick={show}>Show Loading</button>
-      <GlobalLoading />
+      <button onClick={show}>Show Alert</button>
+      <button onClick={showWithCustomInfo}>Show Alert with custom info</button>
+      <GlobalAlert />
     </div>
   );
 };
@@ -51,52 +58,25 @@ const App = () => {
 ## Other way to trigger loading
 
 ```tsx
-import { showLoading } from 'react-hot-toast';
-showLoading(true); // show
-showLoading(false); // hide
-
 import { show, hide } from 'react-hot-toast';
 show(); // show
 hide(); // hide
 
-import { globalLoading } from 'react-hot-toast';
-globalLoading.show(); // show
-globalLoading.hide(); // hide
+import { globalAlert } from 'react-hot-toast';
+globalAlert.show(); // show
+globalAlert.hide(); // hide
 ```
 
-<details><summary>Example using React Class</summary>
-
-</details>
-
-## Available Loaders, PropTypes, and Default Values
+<details><summary> Available Loaders, PropTypes, and Default Values</summary>
 
 Default props:
 
 ```
-  children: React.ReactNode;
+interface GlobalLoadingProps {
   WrapperComponent?: (props: any) => ReactElement;
   backgroundColor?: string;
-  loadingSize?: number;
-  loadingColor?: string;
-  loadingType?:
-    | 'spin'
-    | 'bars'
-    | 'bubbles'
-    | 'cubes'
-    | 'cylon'
-    | 'spin'
-    | 'spinningBubbles'
-    | 'spokes';
-```
-
-### `children` prop
-
-`children` will replace default loading icon
-
-```tsx
-<GlobalLoading>
-  <ReactLoading /> // OR your custom loading component
-<GlobalLoading/>
+  zIndex?: number;
+}
 ```
 
 ### `WrapperComponent` prop
@@ -104,7 +84,7 @@ Default props:
 The wrapper component ( background screen )
 
 ```tsx
-<GlobalLoading WrapperComponent={() => <div style={style} />} />;
+<globalAlert WrapperComponent={() => <div style={style} />} />;
 
 // suggested style
 style = {
@@ -123,6 +103,4 @@ style = {
 };
 ```
 
-### `zIndex`, `backgroundColor`, `loadingSize`, `loadingThickness`, `loadingSpeed`, `loadingColor`, and `loadingType` props
-
-Style of the default loading component
+</details>

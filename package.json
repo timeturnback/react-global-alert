@@ -18,11 +18,9 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/timeturnback/react-global-alert.git"
+    "build": "tsup",
+    "prepack": "yarn build",
+    "release": "release-it"
   },
   "keywords": [
     "react",
@@ -47,5 +45,25 @@
   "bugs": {
     "url": "https://github.com/timeturnback/react-global-alert/issues"
   },
-  "homepage": "https://github.com/timeturnback/react-global-alert#readme"
+  "homepage": "https://github.com/timeturnback/react-global-alert#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timeturnback/react-global-alert.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    }
+  }
 }

@@ -1,5 +1,4 @@
 import React, { CSSProperties, FC, ReactElement, ReactNode, useEffect, useState } from 'react';
-import { Loading } from './Loading';
 
 type AlertInfo = {
   title?: string;
@@ -15,11 +14,11 @@ export let setAlertVisible: Listener<boolean> = () => {};
 
 export let setAlertInfo: Listener<AlertInfo> = () => {};
 
-export const show = (info: AlertInfo) => {
+export const show = (info?: AlertInfo) => {
   if (setAlertVisible) {
     setAlertVisible(true);
   }
-  if (setAlertInfo) {
+  if (info && setAlertInfo) {
     setAlertInfo(info);
   }
 };
@@ -36,23 +35,13 @@ export const globalAlert = {
 };
 
 interface GlobalLoadingProps {
-  children?: React.ReactNode;
   WrapperComponent?: (props: any) => ReactElement;
   backgroundColor?: string;
   zIndex?: number;
-  loadingSize?: number;
-  loadingColor?: string;
-  loadingThickness?: number;
-  loadingSpeed?: number;
 }
 export const GlobalAlert: FC<GlobalLoadingProps> = props => {
   const {
-    children,
     WrapperComponent,
-    loadingSize = 70,
-    loadingColor = '#eee',
-    loadingSpeed = 1,
-    loadingThickness = 7,
     backgroundColor = 'rgba(0, 0, 0, 0.6)',
     zIndex = 999,
     ...rest
