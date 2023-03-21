@@ -55,14 +55,14 @@ const App = () => {
 };
 ```
 
-## Other way to trigger loading
+## Other way to show alert
 
 ```tsx
-import { show, hide } from 'react-hot-toast';
+import { show, hide } from 'react-global-alert'';
 show(); // show
 hide(); // hide
 
-import { globalAlert } from 'react-hot-toast';
+import { globalAlert } from 'react-global-alert'';
 globalAlert.show(); // show
 globalAlert.hide(); // hide
 ```
