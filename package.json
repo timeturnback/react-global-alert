@@ -1,6 +1,6 @@
 {
   "name": "react-global-alert",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Global alert for React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
