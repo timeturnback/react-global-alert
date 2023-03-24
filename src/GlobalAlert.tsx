@@ -35,13 +35,23 @@ export const globalAlert = {
 };
 
 interface GlobalLoadingProps {
-  WrapperComponent?: (props: any) => ReactElement;
+  WrapperOverlay?: (props: any) => ReactElement;
+  ModalPanel?: (props: any) => ReactElement;
+  ButtonGroup?: (props: any) => ReactElement;
+  ButtonCancel?: (props: any) => ReactElement;
+  ButtonConfirm?: (props: any) => ReactElement;
+  Title?: (props: any) => ReactElement;
   backgroundColor?: string;
   zIndex?: number;
 }
 export const GlobalAlert: FC<GlobalLoadingProps> = props => {
   const {
-    WrapperComponent,
+    WrapperOverlay,
+    ModalPanel,
+    ButtonGroup,
+    ButtonCancel,
+    ButtonConfirm,
+    Title,
     backgroundColor = 'rgba(0, 0, 0, 0.6)',
     zIndex = 999,
     ...rest
@@ -77,22 +87,42 @@ export const GlobalAlert: FC<GlobalLoadingProps> = props => {
       {children}
     </div>
   );
-  const Wrapper = WrapperComponent || DefaultWrapper;
+  const Wrapper = WrapperOverlay || DefaultWrapper;
+  const DefaultPanel = ({ children }: { children: ReactNode }) => (
+    <div style={$modal}>{children}</div>
+  );
+  const Panel = ModalPanel || DefaultPanel;
 
   return (
     <Wrapper {...rest} onClick={() => setIsVisible(false)}>
-      <div style={$modal}>
-        <div style={$modalTitle}>{info?.title || 'Alert'}</div>
+      <Panel>
+        {Title ? (
+          <Title title={info?.title} />
+        ) : (
+          <div style={$modalTitle}>{info?.title || 'Alert'}</div>
+        )}
         <div style={$modalContent}>{info?.content || 'Are you sure ?'}</div>
-        <div style={$btRow}>
-          <button style={$buttonCancel} onClick={_onCancel}>
-            {info?.cancelBtTitle || 'Cancel'}
-          </button>
-          <button style={$buttonConfirm} onClick={_onConfirm}>
-            {info?.confirmBtTitle || 'OK'}
-          </button>
-        </div>
-      </div>
+        {ButtonGroup ? (
+          <ButtonGroup onCancel={_onCancel} onConfirm={_onConfirm} />
+        ) : (
+          <div style={$btRow}>
+            {ButtonCancel ? (
+              <ButtonCancel onClick={_onCancel} />
+            ) : (
+              <button style={$buttonCancel} onClick={_onCancel}>
+                {info?.cancelBtTitle || 'Cancel'}
+              </button>
+            )}
+            {ButtonConfirm ? (
+              <ButtonConfirm onClick={_onConfirm} />
+            ) : (
+              <button style={$buttonConfirm} onClick={_onConfirm}>
+                {info?.confirmBtTitle || 'OK'}
+              </button>
+            )}
+          </div>
+        )}
+      </Panel>
     </Wrapper>
   );
 };
@@ -133,15 +163,15 @@ const $modalContent: CSSProperties = {
 const $btRow: CSSProperties = {
   display: 'flex',
   justifyContent: 'center',
-  marginTop: 10
+  marginTop: 10,
+  gap: 10
 };
 const $buttonCancel: CSSProperties = {
   backgroundColor: '#fff',
   color: '#000',
   border: '1px solid #000',
   borderRadius: 5,
-  padding: '8px 15px',
-  marginRight: 10
+  padding: '8px 15px'
 };
 const $buttonConfirm: CSSProperties = {
   backgroundColor: '#000',

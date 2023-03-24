@@ -1,4 +1,4 @@
-# React Global Loading
+# React Global Alert
 
 ![Example](/assets/example.png)
 
@@ -53,6 +53,63 @@ const App = () => {
     </div>
   );
 };
+```
+
+## Custom Alert Components
+
+```tsx
+<GlobalAlert
+  WrapperOverlay={props => (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0, 120, 220, 0.3)',
+
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      {...props} // Important
+    />
+  )}
+  ModalPanel={({ children }) => (
+    <div className="flex flex-col items-center rounded-lg bg-gray-300 p-5">{children}</div>
+  )}
+  Title={({ title }) => <h1 className="text-2xl font-bold text-blue-500">{title}</h1>}
+  ButtonGroup={({ onCancel, onConfirm }) => (
+    <div className="flex gap-2">
+      <button
+        className="rounded-lg border border-blue-500 bg-blue-200 p-2 text-white"
+        onClick={onCancel}
+      >
+        Cancel
+      </button>
+      <button className="rounded-lg bg-blue-500 p-2 text-white" onClick={onConfirm}>
+        Confirm
+      </button>
+    </div>
+  )}
+  ButtonCancel={(
+    props // ButtonCancel will be ignored if ButtonGroup is provided
+  ) => (
+    <button className="rounded-lg border border-blue-500 bg-blue-200 p-2 text-white" {...props}>
+      Cancel Alert
+    </button>
+  )}
+  ButtonConfirm={(
+    props // ButtonConfirm will be ignored if ButtonGroup is provided
+  ) => (
+    <button className="rounded-lg bg-blue-500 p-2 text-white" {...props}>
+      Confirm Alert
+    </button>
+  )}
+/>
 ```
 
 ## Other way to show alert
