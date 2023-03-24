@@ -57,6 +57,8 @@ const App = () => {
 
 ## Custom Alert Components
 
+![Custom component](/assets/custom-components.png)
+
 ```tsx
 <GlobalAlert
   WrapperOverlay={props => (
